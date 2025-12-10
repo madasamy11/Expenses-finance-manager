@@ -16,6 +16,11 @@ local.properties
 *.apk
 *.ap_
 *.aab
+
+# Keystore files for signing
+*.jks
+*.keystore
+*.base64.txt
 /*/build/
 *.log
 .navigation/

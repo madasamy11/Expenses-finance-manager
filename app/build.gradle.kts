@@ -22,6 +22,23 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            // Signing configuration for CI/CD
+            val keystoreFile = project.findProperty("android.injected.signing.store.file") as String?
+            val keystorePassword = project.findProperty("android.injected.signing.store.password") as String?
+            val keyAlias = project.findProperty("android.injected.signing.key.alias") as String?
+            val keyPassword = project.findProperty("android.injected.signing.key.password") as String?
+            
+            if (keystoreFile != null && file(keystoreFile).exists()) {
+                storeFile = file(keystoreFile)
+                storePassword = keystorePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -29,6 +46,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Sign with release config if available
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

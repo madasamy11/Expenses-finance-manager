@@ -43,10 +43,26 @@ app/src/main/java/com/expense/financemanager/
 
 ## Building the App
 
+### Local Development
+
 1. Clone the repository
 2. Open the project in Android Studio
 3. Sync Gradle files
 4. Run the app on an emulator or physical device
+
+### Automated Builds (CI/CD)
+
+This repository includes a GitHub Actions workflow that automatically builds and releases the app on every push to `main`:
+
+- ✅ Builds signed release APK
+- ✅ Creates GitHub Release with version tag
+- ✅ Uploads APK to the release
+
+**To set up APK signing for automated builds:**
+1. Run `./generate-keystore.sh` to create a keystore
+2. Follow the instructions in [SIGNING_SETUP.md](SIGNING_SETUP.md) to add secrets to GitHub
+
+Without signing configuration, the workflow will create unsigned APKs (useful for testing).
 
 ## Requirements
 
