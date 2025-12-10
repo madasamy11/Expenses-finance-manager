@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Script to generate Android keystore for APK signing
 # This script is for convenience and should be run locally
@@ -90,8 +91,10 @@ if [ $? -eq 0 ]; then
         echo "3. See SIGNING_SETUP.md for detailed instructions"
         echo ""
         echo "4. After adding secrets, securely delete the base64 file:"
-        echo "   shred -u ${KEYSTORE_NAME}.base64.txt  # Linux"
-        echo "   rm -P ${KEYSTORE_NAME}.base64.txt     # macOS"
+        echo "   shred -u ${KEYSTORE_NAME}.base64.txt  # Linux (may not work on all filesystems)"
+        echo "   rm ${KEYSTORE_NAME}.base64.txt        # Alternative: simple deletion"
+        echo ""
+        echo "   Note: Secure deletion may not be effective on SSDs or network storage."
         echo ""
     else
         echo "Warning: base64 command not found. Please convert manually."

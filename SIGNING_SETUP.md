@@ -131,12 +131,14 @@ If you don't configure the secrets, the workflow will still run and create an **
 After adding secrets to GitHub, you should:
 ```bash
 # Securely delete the base64 file
-shred -u keystore.base64.txt  # Linux
+shred -u keystore.base64.txt  # Linux (if filesystem supports)
 # or
-rm -P keystore.base64.txt     # macOS
+rm keystore.base64.txt        # Simple deletion
 
 # Keep keystore.jks in a secure location (not in the repo directory)
 ```
+
+**Note**: Secure deletion tools like `shred` may not be effective on SSDs, network storage, or journaling filesystems. For maximum security, consider encrypting the keystore and storing it in a secure location.
 
 ## References
 

@@ -30,7 +30,8 @@ android {
             val keyAlias = project.findProperty("android.injected.signing.key.alias") as String?
             val keyPassword = project.findProperty("android.injected.signing.key.password") as String?
             
-            if (keystoreFile != null && file(keystoreFile).exists()) {
+            if (keystoreFile != null && file(keystoreFile).exists() && 
+                keystorePassword != null && keyAlias != null && keyPassword != null) {
                 storeFile = file(keystoreFile)
                 storePassword = keystorePassword
                 this.keyAlias = keyAlias
