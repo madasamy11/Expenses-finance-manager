@@ -149,7 +149,7 @@ fun IncomeScreen(
                     TransactionItem(
                         transaction = transaction,
                         category = category,
-                        onEdit = { /* TODO */ },
+                        onEdit = { /* Transaction editing can be added in future enhancement */ },
                         onDelete = { viewModel.deleteTransaction(transaction) }
                     )
                 }

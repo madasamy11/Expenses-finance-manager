@@ -7,10 +7,10 @@ import com.expense.financemanager.domain.model.Category
 import com.expense.financemanager.domain.model.Period
 import com.expense.financemanager.domain.model.Transaction
 import com.expense.financemanager.domain.model.TransactionType
+import com.expense.financemanager.presentation.util.DateRangeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,7 +37,7 @@ class ExpenseViewModel @Inject constructor(
         val (startDate, endDate) = if (period == Period.CUSTOM && customRange != null) {
             customRange
         } else {
-            getDateRange(period)
+            DateRangeUtil.getDateRange(period)
         }
         repository.getTransactionsByTypeAndDateRange(TransactionType.EXPENSE, startDate, endDate)
     }.flatMapLatest { it }
@@ -50,7 +50,7 @@ class ExpenseViewModel @Inject constructor(
         val (startDate, endDate) = if (period == Period.CUSTOM && customRange != null) {
             customRange
         } else {
-            getDateRange(period)
+            DateRangeUtil.getDateRange(period)
         }
         repository.getTotalByTypeAndDateRange(TransactionType.EXPENSE, startDate, endDate)
     }.flatMapLatest { it }
@@ -63,7 +63,7 @@ class ExpenseViewModel @Inject constructor(
         val (startDate, endDate) = if (period == Period.CUSTOM && customRange != null) {
             customRange
         } else {
-            getDateRange(period)
+            DateRangeUtil.getDateRange(period)
         }
         repository.getCategoryTotalsByTypeAndDateRange(TransactionType.EXPENSE, startDate, endDate)
     }.flatMapLatest { it }
@@ -100,43 +100,5 @@ class ExpenseViewModel @Inject constructor(
     
     fun deleteTransaction(transaction: Transaction) = viewModelScope.launch {
         repository.deleteTransaction(transaction)
-    }
-    
-    private fun getDateRange(period: Period): Pair<Long, Long> {
-        val calendar = Calendar.getInstance()
-        val endDate = calendar.timeInMillis
-        
-        when (period) {
-            Period.DAY -> {
-                calendar.set(Calendar.HOUR_OF_DAY, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-            }
-            Period.WEEK -> {
-                calendar.set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
-                calendar.set(Calendar.HOUR_OF_DAY, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-            }
-            Period.MONTH -> {
-                calendar.set(Calendar.DAY_OF_MONTH, 1)
-                calendar.set(Calendar.HOUR_OF_DAY, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-            }
-            Period.YEAR -> {
-                calendar.set(Calendar.DAY_OF_YEAR, 1)
-                calendar.set(Calendar.HOUR_OF_DAY, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-            }
-            Period.CUSTOM -> {} // Handled separately
-        }
-        
-        return Pair(calendar.timeInMillis, endDate)
     }
 }
