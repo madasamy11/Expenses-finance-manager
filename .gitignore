@@ -22,3 +22,6 @@ local.properties
 captures/
 output.json
 *.hprof
+gradle-*/
+!gradle/wrapper/gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
