@@ -19,13 +19,16 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideExpenseDatabase(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        callback: DatabaseCallback
     ): ExpenseDatabase {
         return Room.databaseBuilder(
             context,
             ExpenseDatabase::class.java,
             "expense_database"
-        ).build()
+        )
+        .addCallback(callback)
+        .build()
     }
     
     @Provides
