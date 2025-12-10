@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.expense.financemanager.data.repository.ExpenseRepository
 import com.expense.financemanager.domain.model.Category
+import com.expense.financemanager.domain.model.Period
 import com.expense.financemanager.domain.model.Transaction
 import com.expense.financemanager.domain.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -138,8 +139,4 @@ class ExpenseViewModel @Inject constructor(
         
         return Pair(calendar.timeInMillis, endDate)
     }
-}
-
-enum class Period {
-    DAY, WEEK, MONTH, YEAR, CUSTOM
 }

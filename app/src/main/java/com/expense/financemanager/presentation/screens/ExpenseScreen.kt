@@ -9,17 +9,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.expense.financemanager.domain.model.Category
-import com.expense.financemanager.domain.model.Transaction
 import com.expense.financemanager.presentation.components.CategoryTotalsChart
 import com.expense.financemanager.presentation.components.PeriodSelector
 import com.expense.financemanager.presentation.components.TransactionItem
 import com.expense.financemanager.presentation.viewmodel.ExpenseViewModel
-import com.expense.financemanager.presentation.viewmodel.Period
 import java.text.NumberFormat
 import java.util.*
 

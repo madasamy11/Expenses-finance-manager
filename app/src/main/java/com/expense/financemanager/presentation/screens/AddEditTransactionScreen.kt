@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.expense.financemanager.domain.model.Transaction
 import com.expense.financemanager.domain.model.TransactionType
 import com.expense.financemanager.presentation.viewmodel.ExpenseViewModel
+import com.expense.financemanager.presentation.viewmodel.IncomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +24,8 @@ fun AddEditTransactionScreen(
     transactionId: Long,
     type: String,
     onNavigateBack: () -> Unit,
-    viewModel: ExpenseViewModel = hiltViewModel()
+    expenseViewModel: ExpenseViewModel = hiltViewModel(),
+    incomeViewModel: IncomeViewModel = hiltViewModel()
 ) {
     var amount by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -34,8 +36,17 @@ fun AddEditTransactionScreen(
         if (type == "INCOME") TransactionType.INCOME else TransactionType.EXPENSE 
     }
     
-    val categories by viewModel.expenseCategories.collectAsState()
-    val filteredCategories = categories.filter { it.type == transactionType }
+    // Use the appropriate ViewModel based on transaction type
+    val categories = if (transactionType == TransactionType.INCOME) {
+        incomeViewModel.incomeCategories.collectAsState()
+    } else {
+        expenseViewModel.expenseCategories.collectAsState()
+    }
+    
+    val filteredCategories by categories
+    
+    // Select the appropriate ViewModel for operations
+    val viewModel = if (transactionType == TransactionType.INCOME) incomeViewModel else expenseViewModel
     
     val dateFormatter = remember {
         SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())

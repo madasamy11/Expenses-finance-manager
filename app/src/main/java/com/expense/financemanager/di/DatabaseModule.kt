@@ -18,6 +18,14 @@ object DatabaseModule {
     
     @Provides
     @Singleton
+    fun provideDatabaseCallback(
+        database: Provider<ExpenseDatabase>
+    ): DatabaseCallback {
+        return DatabaseCallback(database)
+    }
+    
+    @Provides
+    @Singleton
     fun provideExpenseDatabase(
         @ApplicationContext context: Context,
         callback: DatabaseCallback
